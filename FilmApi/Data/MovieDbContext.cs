@@ -13,7 +13,7 @@ namespace FilmApi.Data
         public DbSet<Character> Characters { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Franchise> Franchises { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
