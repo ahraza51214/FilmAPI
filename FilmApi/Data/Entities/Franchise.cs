@@ -5,6 +5,7 @@ namespace FilmApi.Data.Entities
 {
     public class Franchise
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]

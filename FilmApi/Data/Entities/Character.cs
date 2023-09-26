@@ -5,6 +5,7 @@ namespace FilmApi.Data.Entities
 {
     public class Character
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -22,7 +23,6 @@ namespace FilmApi.Data.Entities
         public string? PictureUrl { get; set; }
 
         // Navigation property
-        public ICollection<Movie> Movies { get; set; }
+        public ICollection<Movie>? Movies { get; set; }
     }
 }
-
