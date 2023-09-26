@@ -23,19 +23,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Controllers\" />
     <None Remove="Data\" />
     <None Remove="Services\" />
     <None Remove="Mappers\" />
     <None Remove="Data\Dtos\" />
     <None Remove="Data\Entities\" />
+    <None Remove="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Data\" />
     <Folder Include="Services\" />
     <Folder Include="Mappers\" />
     <Folder Include="Data\Dtos\" />
     <Folder Include="Data\Entities\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 </Project>

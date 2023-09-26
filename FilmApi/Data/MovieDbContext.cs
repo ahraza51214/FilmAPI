@@ -35,6 +35,7 @@ namespace FilmApi.Data
             modelBuilder.Entity<Franchise>().HasData(
                 new Franchise { Id = 1, Name = "Marvel Cinematic Universe", Description = "Marvel movies franchise" },
                 new Franchise { Id = 2, Name = "Lord of the Rings", Description = "Fantasy movie franchise" }
+                // Add more franchises here
             );
             /// Movies
             modelBuilder.Entity<Movie>().HasData(
