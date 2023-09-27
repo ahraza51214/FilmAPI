@@ -26,9 +26,12 @@ namespace FilmApi.Migrations
                     b.Property<int>("CharacterId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MovieId")
                         .HasColumnType("int");
 
+                    b.HasKey("CharacterId", "MovieId");
 
+                    b.HasIndex("MovieId");
 
                     b.ToTable("CharacterMovie", (string)null);
 
@@ -166,6 +169,111 @@ namespace FilmApi.Migrations
                             Alias = "Iron Man",
                             FullName = "Tony Stark",
                             Gender = "Male",
+                            PictureUrl = "URL1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Alias = "Captain America",
+                            FullName = "Steve Rogers",
+                            Gender = "Male",
+                            PictureUrl = "URL2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Alias = "Black Widow",
+                            FullName = "Natasha Romanoff",
+                            Gender = "Female",
+                            PictureUrl = "URL3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Alias = "The Hulk",
+                            FullName = "Bruce Banner",
+                            Gender = "Male",
+                            PictureUrl = "URL4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Alias = "Thor",
+                            FullName = "Thor Odinson",
+                            Gender = "Male",
+                            PictureUrl = "URL5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Alias = "Spider-Man",
+                            FullName = "Peter Parker",
+                            Gender = "Male",
+                            PictureUrl = "URL6"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Alias = "Wonder Woman",
+                            FullName = "Diana Prince",
+                            Gender = "Female",
+                            PictureUrl = "URL7"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Alias = "Batman",
+                            FullName = "Bruce Wayne",
+                            Gender = "Male",
+                            PictureUrl = "URL8"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Alias = "Superman",
+                            FullName = "Clark Kent",
+                            Gender = "Male",
+                            PictureUrl = "URL9"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Alias = "Princess Leia",
+                            FullName = "Leia Organa",
+                            Gender = "Female",
+                            PictureUrl = "URL10"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Alias = "Luke Skywalker",
+                            FullName = "Luke Skywalker",
+                            Gender = "Male",
+                            PictureUrl = "URL11"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Alias = "Harry Potter",
+                            FullName = "Harry Potter",
+                            Gender = "Male",
+                            PictureUrl = "URL12"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Alias = "Hermione Granger",
+                            FullName = "Hermione Granger",
+                            Gender = "Female",
+                            PictureUrl = "URL13"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Alias = "Ron Weasley",
+                            FullName = "Ron Weasley",
+                            Gender = "Male",
+                            PictureUrl = "URL14"
                         });
                 });
 
@@ -266,6 +374,107 @@ namespace FilmApi.Migrations
                             Genre = "Action, Adventure",
                             PictureUrl = "URL1",
                             ReleaseYear = 2008,
+                            Title = "Iron Man",
+                            TrailerUrl = "TrailerURL1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Director = "Joss Whedon",
+                            FranchiseId = 1,
+                            Genre = "Action, Adventure",
+                            PictureUrl = "URL2",
+                            ReleaseYear = 2012,
+                            Title = "The Avengers",
+                            TrailerUrl = "TrailerURL2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Director = "James Gunn",
+                            FranchiseId = 1,
+                            Genre = "Action, Adventure",
+                            PictureUrl = "URL3",
+                            ReleaseYear = 2014,
+                            Title = "Guardians of the Galaxy",
+                            TrailerUrl = "TrailerURL3"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Director = "Peter Jackson",
+                            FranchiseId = 2,
+                            Genre = "Adventure, Fantasy",
+                            PictureUrl = "URL4",
+                            ReleaseYear = 2001,
+                            Title = "The Fellowship of the Ring",
+                            TrailerUrl = "TrailerURL4"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Director = "Peter Jackson",
+                            FranchiseId = 2,
+                            Genre = "Adventure, Fantasy",
+                            PictureUrl = "URL5",
+                            ReleaseYear = 2002,
+                            Title = "The Two Towers",
+                            TrailerUrl = "TrailerURL5"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Director = "Peter Jackson",
+                            FranchiseId = 2,
+                            Genre = "Adventure, Fantasy",
+                            PictureUrl = "URL6",
+                            ReleaseYear = 2003,
+                            Title = "The Return of the King",
+                            TrailerUrl = "TrailerURL6"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Director = "George Lucas",
+                            FranchiseId = 3,
+                            Genre = "Action, Adventure",
+                            PictureUrl = "URL7",
+                            ReleaseYear = 1977,
+                            Title = "Star Wars: A New Hope",
+                            TrailerUrl = "TrailerURL7"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Director = "Irvin Kershner",
+                            FranchiseId = 3,
+                            Genre = "Action, Adventure",
+                            PictureUrl = "URL8",
+                            ReleaseYear = 1980,
+                            Title = "Star Wars: The Empire Strikes Back",
+                            TrailerUrl = "TrailerURL8"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Director = "Chris Columbus",
+                            FranchiseId = 4,
+                            Genre = "Adventure, Fantasy",
+                            PictureUrl = "URL9",
+                            ReleaseYear = 2001,
+                            Title = "Harry Potter and the Sorcerer's Stone",
+                            TrailerUrl = "TrailerURL9"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Director = "Chris Columbus",
+                            FranchiseId = 4,
+                            Genre = "Adventure, Fantasy",
+                            PictureUrl = "URL10",
+                            ReleaseYear = 2002,
+                            Title = "Harry Potter and the Chamber of Secrets",
+                            TrailerUrl = "TrailerURL10"
                         });
                 });
 
@@ -273,11 +482,13 @@ namespace FilmApi.Migrations
                 {
                     b.HasOne("FilmApi.Data.Entities.Character", null)
                         .WithMany()
+                        .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FilmApi.Data.Entities.Movie", null)
                         .WithMany()
+                        .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
