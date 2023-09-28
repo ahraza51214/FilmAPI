@@ -29,6 +29,10 @@
     <None Remove="Data\Dtos\" />
     <None Remove="Data\Entities\" />
     <None Remove="Controllers\" />
+    <None Remove="Data\Repositories\" />
+    <None Remove="Data\Repositories\CharacterRepository\" />
+    <None Remove="Data\Repositories\FranchiseRepository\" />
+    <None Remove="Data\Repositories\MovieRepository\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -37,5 +41,9 @@
     <Folder Include="Data\Dtos\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Controllers\" />
+    <Folder Include="Data\Repositories\" />
+    <Folder Include="Data\Repositories\CharacterRepository\" />
+    <Folder Include="Data\Repositories\FranchiseRepository\" />
+    <Folder Include="Data\Repositories\MovieRepository\" />
   </ItemGroup>
 </Project>

@@ -31,8 +31,7 @@ namespace FilmApi.Data
                 .UsingEntity(j => j.ToTable("CharacterMovie"));
 
             // Seeding data
-
-            /// Franchises
+            /// Franchises data
             modelBuilder.Entity<Franchise>().HasData(
                 new Franchise { Id = 1, Name = "Marvel Cinematic Universe", Description = "Marvel movies franchise" },
                 new Franchise { Id = 2, Name = "Lord of the Rings", Description = "Fantasy movie franchise" },
@@ -40,7 +39,7 @@ namespace FilmApi.Data
                 new Franchise { Id = 4, Name = "Harry Potter", Description = "Fantasy book-to-film franchise" }
             );
 
-            /// Movies
+            /// Movies data
             modelBuilder.Entity<Movie>().HasData(
                 new Movie
                 {
@@ -154,7 +153,7 @@ namespace FilmApi.Data
                 }
             );
 
-            /// Characters
+            /// Characters data
             modelBuilder.Entity<Character>().HasData(
                 new Character { Id = 1, FullName = "Tony Stark", Gender = "Male", Alias = "Iron Man", PictureUrl = "URL1" },
                 new Character { Id = 2, FullName = "Steve Rogers", Gender = "Male", Alias = "Captain America", PictureUrl = "URL2" },
