@@ -22,7 +22,12 @@ namespace FilmApi.Services.FranchiseService
 
         public async Task<Franchise?> GetByIdAsync(int id)
         {
-            return await _context.Franchises.FindAsync(id);
+            var franchise = await _context.Franchises.FindAsync(id);
+            if (franchise is null)
+            {
+                throw new FranchiseNotFoundException(id);
+            }
+            return franchise;
         }
 
         public async Task<Franchise> UpdateAsync(Franchise obj)

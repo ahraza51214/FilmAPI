@@ -22,7 +22,12 @@ namespace FilmApi.Services.MovieService
 
         public async Task<Movie?> GetByIdAsync(int id)
         {
-            return await _context.Movies.FindAsync(id);
+            var movie = await _context.Movies.FindAsync(id);
+            if (movie is null)
+            {
+                throw new MovieNotFoundException(id);
+            }
+            return movie;
         }
 
         public async Task<Movie> UpdateAsync(Movie obj)
@@ -53,12 +58,12 @@ namespace FilmApi.Services.MovieService
                 throw new MovieNotFoundException(id);
             }
 
-            var franchise = await _context.Franchises.FindAsync(id);
-            if (franchise == null)
+            var movie = await _context.Movies.FindAsync(id);
+            if (movie == null)
             {
                 throw new MovieNotFoundException(id);
             }
-            _context.Franchises.Remove(franchise);
+            _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
         }
 

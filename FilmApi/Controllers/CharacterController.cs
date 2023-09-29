@@ -19,7 +19,10 @@ namespace FilmApi.Controllers
         }
 
 
-        // GET: api/Character
+        /// <summary>
+        /// Get all Characters
+        /// </summary>
+        /// <returns>A list of characters.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
@@ -27,7 +30,11 @@ namespace FilmApi.Controllers
         }
 
 
-        // GET: api/Character/5
+        /// <summary>
+        /// Retrieves a specific Character by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the character.</param>
+        /// <returns>A Character object if found; otherwise, an error message.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Character>> GetCharacter(int id)
         {
@@ -41,8 +48,12 @@ namespace FilmApi.Controllers
             }
         }
 
-
-        // PUT: api/Character/5
+        /// <summary>
+        /// Updates the details of a specific Character based on the provided character object and unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the character to be updated.</param>
+        /// <param name="character">The character object containing the updated details.</param>
+        /// <returns>Returns NoContent if the operation is successful; otherwise, BadRequest or NotFound based on the error.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, Character character)
         {
@@ -64,7 +75,11 @@ namespace FilmApi.Controllers
         }
 
 
-        // POST: api/Character
+        /// <summary>
+        /// Adds a new Character to the database.
+        /// </summary>
+        /// <param name="character">The character object to be added.</param>
+        /// <returns>Returns a CreatedAtAction result, directing to the GetCharacter action to retrieve the newly added character; otherwise, an error response.</returns>
         [HttpPost]
         public async Task<ActionResult<Character>> PostCharacter(Character character)
         {
@@ -74,7 +89,11 @@ namespace FilmApi.Controllers
         }
 
 
-        // DELETE: api/Character/5
+        /// <summary>
+        /// Deletes a specified Character from the database.
+        /// </summary>
+        /// <param name="id">The unique identifier of the character to be deleted.</param>
+        /// <returns>Returns a NoContent response if deletion is successful; otherwise, a NotFound response with an error message.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
         {
