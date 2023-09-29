@@ -70,7 +70,7 @@ namespace FilmApi.Controllers
         {
             await _serviceFacade._characterService.AddAsync(character);
 
-            return CreatedAtAction("GetProfessor", new { id = character.Id }, character);
+            return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
         }
 
 

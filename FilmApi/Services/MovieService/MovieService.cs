@@ -66,5 +66,10 @@ namespace FilmApi.Services.MovieService
         {
             return await _context.Movies.AnyAsync(e => e.Id == id);
         }
+
+        public Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -67,7 +67,7 @@ namespace FilmApi.Controllers
         {
             await _serviceFacade._franchiseService.AddAsync(franchise);
 
-            return CreatedAtAction("GetProfessor", new { id = franchise.Id }, franchise);
+            return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
         }
 
         // DELETE: api/Franchise/5
