@@ -34,7 +34,7 @@
     <None Remove="Services\MovieService\" />
     <None Remove="Services\FranchiseService\" />
     <None Remove="Services\CharacterService\" />
-    <None Remove="Services\Exceptions\" />
+    <None Remove="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -46,6 +46,6 @@
     <Folder Include="Services\MovieService\" />
     <Folder Include="Services\FranchiseService\" />
     <Folder Include="Services\CharacterService\" />
-    <Folder Include="Services\Exceptions\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 </Project>

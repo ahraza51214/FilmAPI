@@ -1,5 +1,5 @@
 ﻿using System;
-namespace FilmApi.Services.Exceptions
+namespace FilmApi.Exceptions
 {
 	public class MovieNotFoundException : Exception
 	{

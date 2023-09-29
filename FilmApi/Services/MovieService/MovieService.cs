@@ -1,7 +1,7 @@
 ﻿using System;
 using FilmApi.Data;
 using FilmApi.Data.Entities;
-using FilmApi.Services.Exceptions;
+using FilmApi.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmApi.Services.MovieService
@@ -61,7 +61,6 @@ namespace FilmApi.Services.MovieService
             _context.Franchises.Remove(franchise);
             await _context.SaveChangesAsync();
         }
-
 
         private async Task<bool> MovieExists(int id)
         {

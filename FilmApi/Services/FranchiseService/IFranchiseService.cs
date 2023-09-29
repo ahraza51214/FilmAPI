@@ -3,7 +3,7 @@ using FilmApi.Data.Entities;
 
 namespace FilmApi.Services.FranchiseService
 {
-	public interface IFranchiseService : ICrudService<Franchise, int>
+	internal interface IFranchiseService : ICrudService<Franchise, int>
 	{
 	}
 }
