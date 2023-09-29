@@ -19,7 +19,6 @@ namespace FilmApi.Data.Entities
         [StringLength(10)] // Set a fixed length for Gender (e.g., "Male" or "Female")
         public string Gender { get; set; } = null!;
 
-        [Url] // Ensure PictureUrl is a valid URL
         public string? PictureUrl { get; set; }
 
         // Navigation property

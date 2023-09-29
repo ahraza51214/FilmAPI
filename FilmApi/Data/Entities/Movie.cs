@@ -23,10 +23,8 @@ namespace FilmApi.Data.Entities
         [MaxLength(100)] // Set a maximum length for Director
         public string Director { get; set; } = null!;
 
-        [Url] // Ensure PictureUrl is a valid URL
         public string? PictureUrl { get; set; }
 
-        [Url] // Ensure TrailerUrl is a valid URL
         public string? TrailerUrl { get; set; }
 
         // Navigation properties
