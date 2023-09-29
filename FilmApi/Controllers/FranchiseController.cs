@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FilmApi.Data;
 using FilmApi.Data.Entities;
+using FilmApi.Services;
+using FilmApi.Exceptions;
 
 namespace FilmApi.Controllers
 {
@@ -14,40 +10,32 @@ namespace FilmApi.Controllers
     [ApiController]
     public class FranchiseController : ControllerBase
     {
-        private readonly MovieDbContext _context;
+        private readonly ServiceFacade _serviceFacade;
 
-        public FranchiseController(MovieDbContext context)
+        public FranchiseController(ServiceFacade serviceFacade)
         {
-            _context = context;
+            _serviceFacade = serviceFacade;
         }
 
         // GET: api/Franchise
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
         {
-          if (_context.Franchises == null)
-          {
-              return NotFound();
-          }
-            return await _context.Franchises.ToListAsync();
+            return Ok(await _serviceFacade._franchiseService.GetAllAsync());
         }
 
         // GET: api/Franchise/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Franchise>> GetFranchise(int id)
         {
-          if (_context.Franchises == null)
-          {
-              return NotFound();
-          }
-            var franchise = await _context.Franchises.FindAsync(id);
-
-            if (franchise == null)
+            try
             {
-                return NotFound();
+                return await _serviceFacade._franchiseService.GetByIdAsync(id);
             }
-
-            return franchise;
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // PUT: api/Franchise/5
@@ -60,22 +48,13 @@ namespace FilmApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(franchise).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _serviceFacade._franchiseService.UpdateAsync(franchise);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (FranchiseNotFoundException ex)
             {
-                if (!FranchiseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
 
             return NoContent();
@@ -86,39 +65,24 @@ namespace FilmApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
         {
-          if (_context.Franchises == null)
-          {
-              return Problem("Entity set 'MovieDbContext.Franchises'  is null.");
-          }
-            _context.Franchises.Add(franchise);
-            await _context.SaveChangesAsync();
+            await _serviceFacade._franchiseService.AddAsync(franchise);
 
-            return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
+            return CreatedAtAction("GetProfessor", new { id = franchise.Id }, franchise);
         }
 
         // DELETE: api/Franchise/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
-            if (_context.Franchises == null)
+            try
             {
-                return NotFound();
+                await _serviceFacade._franchiseService.DeleteAsync(id);
+                return NoContent();
             }
-            var franchise = await _context.Franchises.FindAsync(id);
-            if (franchise == null)
+            catch (FranchiseNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-
-            _context.Franchises.Remove(franchise);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool FranchiseExists(int id)
-        {
-            return (_context.Franchises?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FilmApi.Data;
 using FilmApi.Data.Entities;
+using FilmApi.Services;
+using FilmApi.Exceptions;
 
 namespace FilmApi.Controllers
 {
@@ -14,40 +10,32 @@ namespace FilmApi.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        private readonly MovieDbContext _context;
+        private readonly ServiceFacade _serviceFacade;
 
-        public MovieController(MovieDbContext context)
+        public MovieController(ServiceFacade serviceFacade)
         {
-            _context = context;
+            _serviceFacade = serviceFacade;
         }
 
         // GET: api/Movie
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
-          if (_context.Movies == null)
-          {
-              return NotFound();
-          }
-            return await _context.Movies.ToListAsync();
+            return Ok(await _serviceFacade._movieService.GetAllAsync());
         }
 
         // GET: api/Movie/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
-          if (_context.Movies == null)
-          {
-              return NotFound();
-          }
-            var movie = await _context.Movies.FindAsync(id);
-
-            if (movie == null)
+            try
             {
-                return NotFound();
+                return await _serviceFacade._movieService.GetByIdAsync(id);
             }
-
-            return movie;
+            catch (MovieNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         // PUT: api/Movie/5
@@ -60,22 +48,13 @@ namespace FilmApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(movie).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _serviceFacade._movieService.UpdateAsync(movie);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (MovieNotFoundException ex)
             {
-                if (!MovieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
 
             return NoContent();
@@ -86,12 +65,7 @@ namespace FilmApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Movie>> PostMovie(Movie movie)
         {
-          if (_context.Movies == null)
-          {
-              return Problem("Entity set 'MovieDbContext.Movies'  is null.");
-          }
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
+            await _serviceFacade._movieService.AddAsync(movie);
 
             return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
@@ -100,25 +74,15 @@ namespace FilmApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
-            if (_context.Movies == null)
+            try
             {
-                return NotFound();
+                await _serviceFacade._movieService.DeleteAsync(id);
+                return NoContent();
             }
-            var movie = await _context.Movies.FindAsync(id);
-            if (movie == null)
+            catch (MovieNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-
-            _context.Movies.Remove(movie);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool MovieExists(int id)
-        {
-            return (_context.Movies?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

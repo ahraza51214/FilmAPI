@@ -1,11 +1,21 @@
 ﻿using FilmApi.Data;
+using FilmApi.Services;
+using FilmApi.Services.CharacterService;
+using FilmApi.Services.FranchiseService;
+using FilmApi.Services.MovieService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+// Register Services and ServiceFacade
+builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<IFranchiseService, FranchiseService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<ServiceFacade>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

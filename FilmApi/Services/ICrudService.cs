@@ -2,7 +2,7 @@
 
 namespace FilmApi.Services
 {
-    internal interface ICrudService<T, ID>
+    public interface ICrudService<T, ID>
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T?> GetByIdAsync(ID id);

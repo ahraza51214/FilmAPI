@@ -22,7 +22,12 @@ namespace FilmApi.Services.CharacterService
 
         public async Task<Character?> GetByIdAsync(int id)
         {
-            return await _context.Characters.FindAsync(id);
+            var character = await _context.Characters.FindAsync(id);
+            if (character is null)
+            {
+                throw new CharacterNotFoundException(id);
+            }
+            return character;
         }
 
         public async Task<Character> UpdateAsync(Character obj)

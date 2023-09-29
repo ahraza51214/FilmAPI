@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using FilmApi.Data;
 using FilmApi.Data.Entities;
+using FilmApi.Services;
+using FilmApi.Exceptions;
 
 namespace FilmApi.Controllers
 {
@@ -14,44 +10,39 @@ namespace FilmApi.Controllers
     [ApiController]
     public class CharacterController : ControllerBase
     {
-        private readonly MovieDbContext _context;
 
-        public CharacterController(MovieDbContext context)
+        private readonly ServiceFacade _serviceFacade;
+
+        public CharacterController(ServiceFacade serviceFacade)
         {
-            _context = context;
+            _serviceFacade = serviceFacade;
         }
+
 
         // GET: api/Character
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
         {
-          if (_context.Characters == null)
-          {
-              return NotFound();
-          }
-            return await _context.Characters.ToListAsync();
+            return Ok(await _serviceFacade._characterService.GetAllAsync());
         }
+
 
         // GET: api/Character/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Character>> GetCharacter(int id)
         {
-          if (_context.Characters == null)
-          {
-              return NotFound();
-          }
-            var character = await _context.Characters.FindAsync(id);
-
-            if (character == null)
+            try
             {
-                return NotFound();
+                return await _serviceFacade._characterService.GetByIdAsync(id);
             }
-
-            return character;
+            catch (CharacterNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
+
         // PUT: api/Character/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCharacter(int id, Character character)
         {
@@ -60,65 +51,43 @@ namespace FilmApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(character).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _serviceFacade._characterService.UpdateAsync(character);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (CharacterNotFoundException ex)
             {
-                if (!CharacterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound(ex.Message);
             }
 
             return NoContent();
         }
 
+
         // POST: api/Character
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Character>> PostCharacter(Character character)
         {
-          if (_context.Characters == null)
-          {
-              return Problem("Entity set 'MovieDbContext.Characters'  is null.");
-          }
-            _context.Characters.Add(character);
-            await _context.SaveChangesAsync();
+            await _serviceFacade._characterService.AddAsync(character);
 
-            return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
+            return CreatedAtAction("GetProfessor", new { id = character.Id }, character);
         }
+
 
         // DELETE: api/Character/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
         {
-            if (_context.Characters == null)
+            try
             {
-                return NotFound();
+                //await _profService.DeleteAsync(id);
+                await _serviceFacade._characterService.DeleteAsync(id);
+                return NoContent();
             }
-            var character = await _context.Characters.FindAsync(id);
-            if (character == null)
+            catch (CharacterNotFoundException ex)
             {
-                return NotFound();
+                return NotFound(ex.Message);
             }
-
-            _context.Characters.Remove(character);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CharacterExists(int id)
-        {
-            return (_context.Characters?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

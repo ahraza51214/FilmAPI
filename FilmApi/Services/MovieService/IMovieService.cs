@@ -3,7 +3,7 @@ using FilmApi.Data.Entities;
 
 namespace FilmApi.Services.MovieService 
 {
-	internal interface IMovieService : ICrudService<Movie, int>
+	public interface IMovieService : ICrudService<Movie, int>
 	{
 	}
 }

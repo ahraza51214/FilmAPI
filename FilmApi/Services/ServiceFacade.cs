@@ -7,11 +7,11 @@ namespace FilmApi.Services
 {
 	public class ServiceFacade
 	{
-		internal readonly ICharacterService _characterService;
-		internal readonly IFranchiseService _franchiseService;
-		internal readonly IMovieService _movieService;
+		public readonly ICharacterService _characterService;
+		public readonly IFranchiseService _franchiseService;
+		public readonly IMovieService _movieService;
 
-		internal ServiceFacade(ICharacterService characterService, IFranchiseService franchiseService, IMovieService movieService)
+		public ServiceFacade(ICharacterService characterService, IFranchiseService franchiseService, IMovieService movieService)
 		{
 			_characterService = characterService;
 			_franchiseService = franchiseService;
