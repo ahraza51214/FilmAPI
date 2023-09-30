@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using FilmApi.Data.Entities;
 using FilmApi.Services;
 using FilmApi.Exceptions;
+using System.Net.Mime;
 
 namespace FilmApi.Controllers
 {
