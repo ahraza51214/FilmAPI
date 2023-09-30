@@ -10,6 +10,7 @@ namespace FilmApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
     [ApiConventionType(typeof(DefaultApiConventions))]
     public class CharacterController : ControllerBase
     {

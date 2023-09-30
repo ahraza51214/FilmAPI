@@ -8,6 +8,9 @@ namespace FilmApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class FranchiseController : ControllerBase
     {
         // Private field to store an instance of the ServiceFacade, providing access to franchise-related services.

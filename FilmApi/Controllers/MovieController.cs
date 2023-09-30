@@ -3,11 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using FilmApi.Data.Entities;
 using FilmApi.Services;
 using FilmApi.Exceptions;
+using System.Net.Mime;
 
 namespace FilmApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class MovieController : ControllerBase
     {
         // Private field to store an instance of the ServiceFacade, providing access to movie-related services.
