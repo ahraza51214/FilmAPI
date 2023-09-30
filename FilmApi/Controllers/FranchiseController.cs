@@ -10,10 +10,13 @@ namespace FilmApi.Controllers
     [ApiController]
     public class FranchiseController : ControllerBase
     {
+        // Private field to store an instance of the ServiceFacade, providing access to franchise-related services.
         private readonly ServiceFacade _serviceFacade;
 
+        // Constructor for the FranchiseController, which takes a ServiceFacade as a dependency.
         public FranchiseController(ServiceFacade serviceFacade)
         {
+            // Initialize the _serviceFacade field with the provided instance of ServiceFacade.
             _serviceFacade = serviceFacade;
         }
 
@@ -126,7 +129,6 @@ namespace FilmApi.Controllers
             
         }
 
-
         /// <summary>
         /// Fetches all the movies associated with a specific franchise.
         /// </summary>
@@ -162,8 +164,6 @@ namespace FilmApi.Controllers
             {
                 return NotFound(ex.Message); // Returns a 404 Not Found response with a detailed error message.
             }
-            
         }
-
     }
 }

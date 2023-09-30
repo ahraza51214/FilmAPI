@@ -10,10 +10,13 @@ namespace FilmApi.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
+        // Private field to store an instance of the ServiceFacade, providing access to movie-related services.
         private readonly ServiceFacade _serviceFacade;
 
+        // Constructor for the MovieController, which takes a ServiceFacade as a dependency.
         public MovieController(ServiceFacade serviceFacade)
         {
+            // Initialize the _serviceFacade field with the provided instance of ServiceFacade.
             _serviceFacade = serviceFacade;
         }
 
@@ -104,8 +107,6 @@ namespace FilmApi.Controllers
                 return NotFound(ex.Message);
             }
         }
-
-
 
         /// <summary>
         /// Updates the list of characters associated with a specific movie.

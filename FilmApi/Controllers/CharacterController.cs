@@ -14,13 +14,15 @@ namespace FilmApi.Controllers
     public class CharacterController : ControllerBase
     {
 
+        // Private field to store an instance of the ServiceFacade, providing access to character-related services.
         private readonly ServiceFacade _serviceFacade;
 
+        // Constructor for the CharacterController, which takes a ServiceFacade as a dependency.
         public CharacterController(ServiceFacade serviceFacade)
         {
+            // Initialize the _serviceFacade field with the provided instance of ServiceFacade.
             _serviceFacade = serviceFacade;
         }
-
 
         /// <summary>
         /// Get all Characters
@@ -31,7 +33,6 @@ namespace FilmApi.Controllers
         {
             return Ok(await _serviceFacade._characterService.GetAllAsync());
         }
-
 
         /// <summary>
         /// Retrieves a specific Character by its unique identifier.
@@ -77,7 +78,6 @@ namespace FilmApi.Controllers
             return NoContent();
         }
 
-
         /// <summary>
         /// Adds a new Character to the database.
         /// </summary>
@@ -90,7 +90,6 @@ namespace FilmApi.Controllers
 
             return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
         }
-
 
         /// <summary>
         /// Deletes a specified Character from the database.
