@@ -71,6 +71,13 @@ namespace FilmApi.Services.FranchiseService
         {
             return await _context.Franchises.AnyAsync(e => e.Id == id);
         }
+
+        public async Task<IEnumerable<Movie>> GetMoviesInFranchiseAsync(int franchiseId)
+        {
+            return await _context.Movies
+                .Where(m => m.FranchiseId == franchiseId)
+                .ToListAsync();
+        }
     }
 }
 

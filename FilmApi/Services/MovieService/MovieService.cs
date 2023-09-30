@@ -15,6 +15,14 @@ namespace FilmApi.Services.MovieService
             _context = context;
 		}
 
+        // Get all the movies in a franchise. 
+        public async Task<IEnumerable<Movie>> GetMoviesInFranchiseAsync(int franchiseId)
+        {
+            return await _context.Movies
+                .Where(m => m.FranchiseId == franchiseId)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             return await _context.Movies.ToListAsync();
@@ -72,9 +80,30 @@ namespace FilmApi.Services.MovieService
             return await _context.Movies.AnyAsync(e => e.Id == id);
         }
 
-        public Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
+        public async Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
         {
-            throw new NotImplementedException();
+            var movie = await _context.Movies.Include(m => m.Characters).FirstOrDefaultAsync(m => m.Id == movieId);
+            if (movie == null)
+            {
+                throw new MovieNotFoundException(movieId);
+            }
+
+            // Fetch characters associated with the given characterIds
+            var associatedCharacters = await _context.Characters
+                .Where(c => characterIds
+                .Contains(c.Id))
+                .ToListAsync();
+
+            // Clear the current associations and reset them
+            movie.Characters.Clear();
+
+            foreach (var character in associatedCharacters)
+            {
+                movie.Characters.Add(character);
+            }
+
+            await _context.SaveChangesAsync();
         }
+
     }
 }

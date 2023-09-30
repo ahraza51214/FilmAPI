@@ -104,5 +104,23 @@ namespace FilmApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Fetches all the movies associated with a specific franchise.
+        /// </summary>
+        /// <param name="franchiseId">The ID of the franchise.</param>
+        /// <returns>A list of movies associated with the given franchise.</returns>
+        [HttpGet("{franchiseId}/movies")]
+        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesInFranchise(int franchiseId)
+        {
+            var movies = await _serviceFacade._franchiseService.GetMoviesInFranchiseAsync(franchiseId);
+
+            if (movies == null || !movies.Any())
+            {
+                return NotFound($"No movies found for franchise with ID {franchiseId}.");
+            }
+
+            return Ok(movies);
+        }
     }
 }

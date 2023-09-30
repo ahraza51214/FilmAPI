@@ -104,5 +104,31 @@ namespace FilmApi.Controllers
                 return NotFound(ex.Message);
             }
         }
+
+
+
+        /// <summary>
+        /// Updates the list of characters associated with a specific movie.
+        /// </summary>
+        /// <param name="movieId">The unique identifier of the movie.</param>
+        /// <param name="characterIds">A list of character IDs to be associated with the movie.</param>
+        /// <returns>
+        /// Returns a NoContent (204) status code if the update is successful.
+        /// Returns a NotFound (404) status if the specified movie is not found.
+        /// </returns>
+        [HttpPut("{movieId}/characters")]
+        public async Task<IActionResult> UpdateMovieCharacters(int movieId, [FromBody] List<int> characterIds)
+        {
+            try
+            {
+                await _serviceFacade._movieService.UpdateCharactersInMovieAsync(movieId, characterIds);
+                return NoContent(); // You can return NoContent (204) for successful updates without a body. Alternatively, return Ok() if you want.
+            }
+            catch (MovieNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            
+        }
     }
 }

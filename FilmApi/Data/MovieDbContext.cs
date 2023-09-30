@@ -23,12 +23,24 @@ namespace FilmApi.Data
                 .HasOne(m => m.Franchise)
                 .WithMany(f => f.Movies)
                 .HasForeignKey(m => m.FranchiseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                // This part of the code handle the requirement of setting the FranchiseId in Movie to null
+                // when a Franchise is deleted. 
+                .OnDelete(DeleteBehavior.SetNull);
 
+            //This only define the many-to-many relationship between Movie and Characters
+            modelBuilder.Entity<Movie>()
+                .HasMany(m => m.Characters)
+                .WithMany(c => c.Movies)
+                .UsingEntity(j => j.ToTable("CharacterMovie"));
+
+            //Alternatively, we could allso had define the many-to-many relationship between Movie and Characters as
+            /*
             modelBuilder.Entity<Character>()
                 .HasMany(c => c.Movies)
                 .WithMany(m => m.Characters)
                 .UsingEntity(j => j.ToTable("CharacterMovie"));
+            */
+
 
             // Seeding data
             /// Franchises data
