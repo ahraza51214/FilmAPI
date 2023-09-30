@@ -10,10 +10,10 @@ namespace FilmApi.Data
         {
         }
 
-        public DbSet<Character> Characters { get; set; }
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Franchise> Franchises { get; set; }
-      
+        public DbSet<Character> Characters { get; set; }     // DbSet for the 'Character' entity/table.
+        public DbSet<Movie> Movies { get; set; }             // DbSet for the 'Movie' entity/table.
+        public DbSet<Franchise> Franchises { get; set; }     // DbSet for the 'Franchise' entity/table.
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

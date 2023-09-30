@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using FilmApi.Data.Entities;
 using FilmApi.Services;
 using FilmApi.Exceptions;
+using System.Net.Mime;
 
 namespace FilmApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ApiConventionType(typeof(DefaultApiConventions))]
     public class CharacterController : ControllerBase
     {
 

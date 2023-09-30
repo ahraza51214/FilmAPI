@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen();
 
 // Add EF
 builder.Services.AddDbContext<MovieDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Pau")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Ali")));
 
 var app = builder.Build();
 

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FilmApi.Data.Entities
 {
+    // Franchise entity that represents the franchises table in database
     public class Franchise
     {
         [Key]
