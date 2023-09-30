@@ -15,14 +15,6 @@ namespace FilmApi.Services.MovieService
             _context = context;
 		}
 
-        // Get all the movies in a franchise. 
-        public async Task<IEnumerable<Movie>> GetMoviesInFranchiseAsync(int franchiseId)
-        {
-            return await _context.Movies
-                .Where(m => m.FranchiseId == franchiseId)
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             return await _context.Movies.ToListAsync();
@@ -75,18 +67,30 @@ namespace FilmApi.Services.MovieService
             await _context.SaveChangesAsync();
         }
 
-        private async Task<bool> MovieExists(int id)
+      
+        // Get all the characters in a movie. 
+        public async Task<IEnumerable<Character>> GetCharactersInMovieAsync(int movieId)
         {
-            return await _context.Movies.AnyAsync(e => e.Id == id);
-        }
-
-        public async Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
-        {
-            var movie = await _context.Movies.Include(m => m.Characters).FirstOrDefaultAsync(m => m.Id == movieId);
-            if (movie == null)
+            if (!await MovieExists(movieId))
             {
                 throw new MovieNotFoundException(movieId);
             }
+
+            var movie = await _context.Movies.Include(m => m.Characters)
+                                         .FirstOrDefaultAsync(m => m.Id == movieId);
+
+            return movie?.Characters.ToList();
+        }
+
+
+        public async Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
+        {
+            if (!await MovieExists(movieId))
+            {
+                throw new MovieNotFoundException(movieId);
+            }
+
+            var movie = await _context.Movies.Include(m => m.Characters).FirstOrDefaultAsync(m => m.Id == movieId);
 
             // Fetch characters associated with the given characterIds
             var associatedCharacters = await _context.Characters
@@ -95,7 +99,7 @@ namespace FilmApi.Services.MovieService
                 .ToListAsync();
 
             // Clear the current associations and reset them
-            movie.Characters.Clear();
+            // movie.Characters.Clear();
 
             foreach (var character in associatedCharacters)
             {
@@ -105,5 +109,10 @@ namespace FilmApi.Services.MovieService
             await _context.SaveChangesAsync();
         }
 
+
+        private async Task<bool> MovieExists(int id)
+        {
+            return await _context.Movies.AnyAsync(e => e.Id == id);
+        }
     }
 }
