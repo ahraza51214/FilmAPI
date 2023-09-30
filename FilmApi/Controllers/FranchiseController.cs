@@ -17,14 +17,21 @@ namespace FilmApi.Controllers
             _serviceFacade = serviceFacade;
         }
 
-        // GET: api/Franchise
+        /// <summary>
+        /// Retrieves all franchises.
+        /// </summary>
+        /// <returns>A list of all franchises.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
         {
             return Ok(await _serviceFacade._franchiseService.GetAllAsync());
         }
 
-        // GET: api/Franchise/5
+        /// <summary>
+        /// Retrieves a specific franchise by ID.
+        /// </summary>
+        /// <param name="id">The ID of the franchise to retrieve.</param>
+        /// <returns>The franchise with the specified ID if found; otherwise, an error message.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Franchise>> GetFranchise(int id)
         {
@@ -38,7 +45,12 @@ namespace FilmApi.Controllers
             }
         }
 
-        // PUT: api/Franchise/5
+        /// <summary>
+        /// Updates a specific franchise's details.
+        /// </summary>
+        /// <param name="id">The ID of the franchise to update.</param>
+        /// <param name="franchise">The updated details of the franchise.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, Franchise franchise)
@@ -60,7 +72,11 @@ namespace FilmApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Franchise
+        /// <summary>
+        /// Adds a new franchise to the database.
+        /// </summary>
+        /// <param name="franchise">The details of the new franchise to add.</param>
+        /// <returns>The newly created franchise.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
@@ -70,7 +86,11 @@ namespace FilmApi.Controllers
             return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
         }
 
-        // DELETE: api/Franchise/5
+        /// <summary>
+        /// Deletes a specific franchise by ID.
+        /// </summary>
+        /// <param name="id">The ID of the franchise to delete.</param>
+        /// <returns>An IActionResult indicating the result of the operation.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {

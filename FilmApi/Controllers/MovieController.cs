@@ -17,14 +17,21 @@ namespace FilmApi.Controllers
             _serviceFacade = serviceFacade;
         }
 
-        // GET: api/Movie
+        /// <summary>
+        /// Retrieves a list of all movies.
+        /// </summary>
+        /// <returns>A list containing all movies in the database.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
         {
             return Ok(await _serviceFacade._movieService.GetAllAsync());
         }
 
-        // GET: api/Movie/5
+        /// <summary>
+        /// Retrieves a specific movie by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie to retrieve.</param>
+        /// <returns>The movie with the specified ID.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Movie>> GetMovie(int id)
         {
@@ -38,7 +45,12 @@ namespace FilmApi.Controllers
             }
         }
 
-        // PUT: api/Movie/5
+        /// <summary>
+        /// Updates the details of a specific movie.
+        /// </summary>
+        /// <param name="id">The ID of the movie to update.</param>
+        /// <param name="movie">The updated movie details.</param>
+        /// <returns>An IActionResult indicating the result of the update operation.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id, Movie movie)
@@ -60,7 +72,11 @@ namespace FilmApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Movie
+        /// <summary>
+        /// Adds a new movie to the database.
+        /// </summary>
+        /// <param name="movie">The details of the new movie to add.</param>
+        /// <returns>The newly created movie.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Movie>> PostMovie(Movie movie)
@@ -70,7 +86,11 @@ namespace FilmApi.Controllers
             return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
         }
 
-        // DELETE: api/Movie/5
+        /// <summary>
+        /// Deletes a specific movie from the database by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie to delete.</param>
+        /// <returns>An IActionResult indicating the result of the delete operation.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
