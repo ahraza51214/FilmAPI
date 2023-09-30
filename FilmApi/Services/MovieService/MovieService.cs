@@ -67,21 +67,6 @@ namespace FilmApi.Services.MovieService
             await _context.SaveChangesAsync();
         }
 
-      
-        // Get all the characters in a movie. 
-        public async Task<IEnumerable<Character>> GetCharactersInMovieAsync(int movieId)
-        {
-            if (!await MovieExists(movieId))
-            {
-                throw new MovieNotFoundException(movieId);
-            }
-
-            var movie = await _context.Movies.Include(m => m.Characters)
-                                         .FirstOrDefaultAsync(m => m.Id == movieId);
-
-            return movie?.Characters.ToList();
-        }
-
 
         public async Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
         {
@@ -109,6 +94,19 @@ namespace FilmApi.Services.MovieService
             await _context.SaveChangesAsync();
         }
 
+        // Get all the characters in a movie. 
+        public async Task<IEnumerable<Character>> GetCharactersInMovieAsync(int movieId)
+        {
+            if (!await MovieExists(movieId))
+            {
+                throw new MovieNotFoundException(movieId);
+            }
+
+            var movie = await _context.Movies.Include(m => m.Characters)
+                                         .FirstOrDefaultAsync(m => m.Id == movieId);
+
+            return movie?.Characters.ToList();
+        }
 
         private async Task<bool> MovieExists(int id)
         {

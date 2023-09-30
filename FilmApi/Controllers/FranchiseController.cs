@@ -106,6 +106,28 @@ namespace FilmApi.Controllers
         }
 
         /// <summary>
+        /// Updates the movies associated with a given franchise.
+        /// </summary>
+        /// <param name="franchiseId">The ID of the franchise to update.</param>
+        /// <param name="movieIds">The list of movie IDs to associate with the franchise.</param>
+        /// <returns>Returns a No Content response if the update was successful, or Not Found if the franchise was not found.</returns>
+        [HttpPut("{franchiseId}/movies")]
+        public async Task<IActionResult> UpdateMoviesInFranchise(int franchiseId, [FromBody] List<int> movieIds)
+        {
+            try
+            {
+                await _serviceFacade._franchiseService.UpdateMoviesInFranchiseAsync(franchiseId, movieIds);
+                return NoContent(); // HTTP 204 No Content response for a successful operation with no additional output.
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(ex.Message); // Returns a 404 Not Found response with a detailed error message.
+            }
+            
+        }
+
+
+        /// <summary>
         /// Fetches all the movies associated with a specific franchise.
         /// </summary>
         /// <param name="franchiseId">The ID of the franchise.</param>
@@ -122,5 +144,26 @@ namespace FilmApi.Controllers
 
             return Ok(movies);
         }
+
+        /// <summary>
+        /// Retrieves a list of characters associated with a given franchise.
+        /// </summary>
+        /// <param name="franchiseId">The ID of the franchise for which to retrieve associated characters.</param>
+        /// <returns>Returns a list of characters associated with the specified franchise or a Not Found response if the franchise was not found.</returns>
+        [HttpGet("{franchiseId}/characters")]
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersInFranchise(int franchiseId)
+        {
+            try
+            {
+                var characters = await _serviceFacade._franchiseService.GetCharactersInFranchiseAsync(franchiseId);
+                return Ok(characters);
+            }
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(ex.Message); // Returns a 404 Not Found response with a detailed error message.
+            }
+            
+        }
+
     }
 }

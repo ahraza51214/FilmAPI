@@ -122,13 +122,32 @@ namespace FilmApi.Controllers
             try
             {
                 await _serviceFacade._movieService.UpdateCharactersInMovieAsync(movieId, characterIds);
-                return NoContent(); // You can return NoContent (204) for successful updates without a body. Alternatively, return Ok() if you want.
+                return NoContent(); // Return NoContent (204) for successful updates without a body. Alternatively, return Ok() if you want.
             }
             catch (MovieNotFoundException ex)
             {
                 return NotFound(ex.Message);
             }
             
+        }
+
+        /// <summary>
+        /// Retrieves a list of characters associated with a given movie.
+        /// </summary>
+        /// <param name="movieId">The ID of the movie for which to retrieve associated characters.</param>
+        /// <returns>Returns a list of characters associated with the specified movie or a Not Found response if the movie was not found.</returns>
+        [HttpGet("{movieId}/characters")]
+        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersInMovie(int movieId)
+        {
+            try
+            {
+                var characters = await _serviceFacade._movieService.GetCharactersInMovieAsync(movieId);
+                return Ok(characters); // Returns a 200 OK response with the list of characters.
+            }
+            catch (MovieNotFoundException ex)
+            {
+                return NotFound(ex.Message); // Returns a 404 Not Found response with a detailed error message.
+            }
         }
     }
 }

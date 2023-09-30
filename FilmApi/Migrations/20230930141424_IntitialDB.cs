@@ -54,7 +54,7 @@ namespace FilmApi.Migrations
                     Director = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrailerUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FranchiseId = table.Column<int>(type: "int", nullable: false)
+                    FranchiseId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -64,7 +64,7 @@ namespace FilmApi.Migrations
                         column: x => x.FranchiseId,
                         principalTable: "Franchises",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

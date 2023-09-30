@@ -28,7 +28,7 @@ namespace FilmApi.Data.Entities
         public string? TrailerUrl { get; set; }
 
         // Navigation properties
-        public int FranchiseId { get; set; }
+        public int? FranchiseId { get; set; }//Movie entity's FranchiseId property is maked as nullable
         public Franchise? Franchise { get; set; }
 
         public ICollection<Character>? Characters { get; set; }
