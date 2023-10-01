@@ -13,9 +13,12 @@ Make sure you have installed at least the following tools:
 * Visual Studio 2022 with .NET 6.
 * SQL Server Management Studio 2019
 
-Furter, make sure you have these packages installed:
+Furter, make sure you have these packages installed (rightclick on the projectfile named FilmApi and click 'Manage Nuget Packages...'):
 * AutoMapper.Extensions.Microsoft.DependencyInjection
 * Microsoft.AspNetCore.OpenApi
 * Microsoft.EntityFrameworkCore.Design
 * Microsoft.EntityFrameworkCore.Sqlite
 * Microsoft.EntityFrameworkCore.SqlServer
+* Microsoft.EntityFrameworkCore.Tools
+* Microsoft.VisualStudio.Web.CodeGeneration.Design
+* Swashbuckle.AspNetCore
