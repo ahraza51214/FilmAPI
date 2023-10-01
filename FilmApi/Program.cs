@@ -8,6 +8,16 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
+using FilmApi.Data.Entities;
+using Humanizer.Localisation;
+using Humanizer;
+using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.VisualBasic;
+using NuGet.DependencyResolver;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Security.Policy;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +33,7 @@ builder.Services.AddScoped<ServiceFacade>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+/*
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -32,7 +43,58 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
+*/
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Postgrad API",
+        Description = "Film API serves as a platform for storing and managing movie-related data. " +
+        "Utilizing ASP.NET Core with Entity Framework Core and SQL Server, " +
+        "the API encapsulates functionalities for movies, characters, and franchises. It allows users to: \n\n" + 
 
+            "- **Maintain Characters**: " +
+                "Store basic information such as name, alias, gender, and an associated image URL for each character. \n\n" +
+            
+            "- **Catalog Movies**: Organize movies with essential details including title, genre, release year, " +
+                "director, poster image, and trailer link. \n\n" +
+
+            "- **Organize Franchises**: Manage franchises, each potentially encompassing multiple movies, " +
+                "with an associated description. \n\n" +
+
+        "Key API functionalities: \n\n" + 
+
+            "- **CRUD Operations**: Full Create, Read, Update, and Delete functionalities for movies, " +
+                "characters, and franchises. \n\n" + 
+
+            "- **Relational Updates**: Specifically tailored endpoints for updating character associations " +
+                "in movies and movie associations in franchises. \n\n" + 
+
+            "- **Reporting**: Generate reports to fetch movies in a franchise, characters in a movie, " +
+                "and characters within a particular franchise. \n\n" +
+                
+        "This API uses DTOs to ensure a decoupled client experience and to safeguard against over - posting. " +
+        "It also ensures documentation clarity through Swagger / OpenAPI annotations. \n\n" +
+        
+        "**Note**: Ensure to adhere to the documentation when interacting with the endpoints and follow the business rules to maintain the integrity of the data relationships."
+            /*,
+            TermsOfService = new Uri("https://example.com/terms"),
+            Contact = new OpenApiContact
+            {
+                Name = "ME",
+                Url = new Uri("https://example.com/contact")
+            },
+            License = new OpenApiLicense
+            {
+            Name = "Example License",
+            Url = new Uri("https://example.com/license")
+        }*/
+    });
+    // using System.Reflection;
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 // Add EF
 builder.Services.AddDbContext<MovieDbContext>(options =>

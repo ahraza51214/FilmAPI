@@ -36,7 +36,7 @@ namespace FilmApi.Controllers
         }
 
         /// <summary>
-        /// Retrieves a specific Character by its unique identifier.
+        /// Retrieves a specific Character by its unique ID.
         /// </summary>
         /// <param name="id">The unique identifier of the character.</param>
         /// <returns>A Character object if found; otherwise, an error message.</returns>
@@ -54,7 +54,7 @@ namespace FilmApi.Controllers
         }
 
         /// <summary>
-        /// Updates the details of a specific Character based on the provided character object and unique identifier.
+        /// Updates the details of a specific Character based on the provided character object and unique ID.
         /// </summary>
         /// <param name="id">The unique identifier of the character to be updated.</param>
         /// <param name="character">The character object containing the updated details.</param>
