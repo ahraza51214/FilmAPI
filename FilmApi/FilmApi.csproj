@@ -29,30 +29,37 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.11" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Data\" />
     <None Remove="Services\" />
     <None Remove="Mappers\" />
-    <None Remove="Data\Dtos\" />
     <None Remove="Data\Entities\" />
     <None Remove="Controllers\" />
     <None Remove="Services\MovieService\" />
     <None Remove="Services\FranchiseService\" />
     <None Remove="Services\CharacterService\" />
     <None Remove="Exceptions\" />
+    <None Remove="Data\DTOs\" />
+    <None Remove="Data\DTOs\MovieDTOs\" />
+    <None Remove="Data\DTOs\CharacterDTOs\" />
+    <None Remove="Data\DTOs\FranchiseDTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Services\" />
     <Folder Include="Mappers\" />
-    <Folder Include="Data\Dtos\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Controllers\" />
     <Folder Include="Services\MovieService\" />
     <Folder Include="Services\FranchiseService\" />
     <Folder Include="Services\CharacterService\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Data\DTOs\" />
+    <Folder Include="Data\DTOs\MovieDTOs\" />
+    <Folder Include="Data\DTOs\CharacterDTOs\" />
+    <Folder Include="Data\DTOs\FranchiseDTOs\" />
   </ItemGroup>
 </Project>
