@@ -38,7 +38,7 @@ namespace FilmApi.Controllers
         /// <summary>
         /// Retrieves a specific Character by its unique ID.
         /// </summary>
-        /// <param name="id">The unique identifier of the character.</param>
+        /// <param name="id">The unique ID of the character.</param>
         /// <returns>A Character object if found; otherwise, an error message.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Character>> GetCharacter(int id)
@@ -56,7 +56,7 @@ namespace FilmApi.Controllers
         /// <summary>
         /// Updates the details of a specific Character based on the provided character object and unique ID.
         /// </summary>
-        /// <param name="id">The unique identifier of the character to be updated.</param>
+        /// <param name="id">The unique ID of the character to be updated.</param>
         /// <param name="character">The character object containing the updated details.</param>
         /// <returns>Returns NoContent if the operation is successful; otherwise, BadRequest or NotFound based on the error.</returns>
         [HttpPut("{id}")]
@@ -95,7 +95,7 @@ namespace FilmApi.Controllers
         /// <summary>
         /// Deletes a specified Character from the database.
         /// </summary>
-        /// <param name="id">The unique identifier of the character to be deleted.</param>
+        /// <param name="id">The unique ID of the character to be deleted.</param>
         /// <returns>Returns a NoContent response if deletion is successful; otherwise, a NotFound response with an error message.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCharacter(int id)
