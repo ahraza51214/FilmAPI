@@ -39,5 +39,12 @@ Lastly, in the file named appsettings.json contains a "ConnectionStrings" that l
   "Guest": ""
 }
 ```
+Please provide your database parameters in the ConnectionStrings to establish connection to your database.
+Also remember to insert 'Guest' in the Program.cs such that it looks like:
+```
+// Add EF
+builder.Services.AddDbContext<MovieDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Guest")));
+```
 <br>
 By follow the above guidlines, you will now be able to run our Web Film API in your local machine.
