@@ -6,7 +6,6 @@ namespace FilmApi.Data.Entities
     // Character entity that represents the characters table in database
     public class Character
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
