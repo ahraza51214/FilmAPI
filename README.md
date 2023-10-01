@@ -13,7 +13,7 @@ Make sure you have installed at least the following tools:
 * Visual Studio 2022 with .NET 6.
 * SQL Server Management Studio 2019
 
-Further, make sure you have these packages installed (rightclick on the project file named FilmApi and click 'Manage Nuget Packages...'):
+Further, make sure you have these packages installed in Visual Studio (rightclick on the project file named FilmApi and click 'Manage Nuget Packages...'):
 * AutoMapper.Extensions.Microsoft.DependencyInjection
 * Microsoft.AspNetCore.OpenApi
 * Microsoft.EntityFrameworkCore.Design
@@ -23,7 +23,7 @@ Further, make sure you have these packages installed (rightclick on the project 
 * Microsoft.VisualStudio.Web.CodeGeneration.Design
 * Swashbuckle.AspNetCore
 
-Then, choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
+Then, in Visual Studio choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
 ```
 add-migration IntitialDB
 ```
