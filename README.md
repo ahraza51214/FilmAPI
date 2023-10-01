@@ -12,3 +12,10 @@ The goal of this assignment is to create a Web API and document it by using Enti
 Make sure you have installed at least the following tools:
 * Visual Studio 2022 with .NET 6.
 * SQL Server Management Studio 2019
+
+Furter, make sure you have these packages installed:
+* AutoMapper.Extensions.Microsoft.DependencyInjection
+* Microsoft.AspNetCore.OpenApi
+* Microsoft.EntityFrameworkCore.Design
+* Microsoft.EntityFrameworkCore.Sqlite
+* Microsoft.EntityFrameworkCore.SqlServer
