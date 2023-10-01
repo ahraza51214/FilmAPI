@@ -23,16 +23,7 @@ Further, make sure you have these packages installed in Visual Studio (rightclic
 * Microsoft.VisualStudio.Web.CodeGeneration.Design
 * Swashbuckle.AspNetCore
 
-Then, in Visual Studio choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
-```
-add-migration IntitialDB
-```
-and then:
-```
-update-database
-```
-
-Lastly, in the file named appsettings.json contains a "ConnectionStrings" that looks like:
+Then in the file named appsettings.json contains a "ConnectionStrings" that looks like:
 ```
 "ConnectionStrings": {
 ...
@@ -45,6 +36,15 @@ Also remember to insert 'Guest' in the Program.cs such that it looks like:
 // Add EF
 builder.Services.AddDbContext<MovieDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Guest")));
+```
+
+Lastly, in Visual Studio choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
+```
+add-migration IntitialDB
+```
+and then:
+```
+update-database
 ```
 <br>
 By follow the above guidlines, you will now be able to run our Web Film API in your local machine.
