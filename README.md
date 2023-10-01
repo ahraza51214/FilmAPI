@@ -24,3 +24,20 @@ Further, make sure you have these packages installed (rightclick on the project 
 * Swashbuckle.AspNetCore
 
 Then, choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
+```
+add-migration IntitialDB
+```
+and then:
+```
+update-database
+```
+
+Lastly, in the file named appsettings.json contains a "ConnectionStrings" that looks like:
+```
+"ConnectionStrings": {
+...
+  "Guest": ""
+}
+```
+<br>
+By follow the above guidlines, you will now be able to run our Web Film API in your local machine.
