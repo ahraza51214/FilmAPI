@@ -23,4 +23,4 @@ Further, make sure you have these packages installed (rightclick on the project 
 * Microsoft.VisualStudio.Web.CodeGeneration.Design
 * Swashbuckle.AspNetCore
 
-Then, choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** 
+Then, choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
