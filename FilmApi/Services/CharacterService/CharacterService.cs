@@ -21,13 +21,13 @@ namespace FilmApi.Services.CharacterService
         // Get all characters asynchronously.
         public async Task<IEnumerable<Character>> GetAllAsync()
         {
-            return await _context.Characters.ToListAsync();
+            return await _context.Characters.Include(c => c.Movies).ToListAsync();
         }
 
         // Get a character by its ID asynchronously.
         public async Task<Character?> GetByIdAsync(int id)
         {
-            var character = await _context.Characters.FindAsync(id);
+            var character = await _context.Characters.Where(c => c.Id == id).Include(c => c.Movies).FirstAsync();
             if (character is null)
             {
                 // Throw an exception if the character with the specified ID is not found.

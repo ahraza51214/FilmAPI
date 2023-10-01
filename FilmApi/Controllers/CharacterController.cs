@@ -4,6 +4,8 @@ using FilmApi.Data.Entities;
 using FilmApi.Services;
 using FilmApi.Exceptions;
 using System.Net.Mime;
+using AutoMapper;
+using FilmApi.Data.DTOs.CharacterDTOs;
 
 namespace FilmApi.Controllers
 {
@@ -18,11 +20,16 @@ namespace FilmApi.Controllers
         // Private field to store an instance of the ServiceFacade, providing access to character-related services.
         private readonly ServiceFacade _serviceFacade;
 
+        // Private field to store an instance of the auto mapper.
+        private readonly IMapper _mapper;
+
         // Constructor for the CharacterController, which takes a ServiceFacade as a dependency.
-        public CharacterController(ServiceFacade serviceFacade)
+        public CharacterController(ServiceFacade serviceFacade, IMapper mapper)
         {
-            // Initialize the _serviceFacade field with the provided instance of ServiceFacade.
+            // Initialize the serviceFacade field with the provided instance of ServiceFacade.
             _serviceFacade = serviceFacade;
+            // Initialize the _mapper field with the provided instance of Imapper.
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -30,9 +37,9 @@ namespace FilmApi.Controllers
         /// </summary>
         /// <returns>A list of characters.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharacters()
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharacters()
         {
-            return Ok(await _serviceFacade._characterService.GetAllAsync());
+            return Ok(_mapper.Map<List<CharacterDTO>>(await _serviceFacade._characterService.GetAllAsync()));
         }
 
         /// <summary>
@@ -41,11 +48,11 @@ namespace FilmApi.Controllers
         /// <param name="id">The unique ID of the character.</param>
         /// <returns>A Character object if found; otherwise, an error message.</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Character>> GetCharacter(int id)
+        public async Task<ActionResult<CharacterDTO>> GetCharacter(int id)
         {
             try
             {
-                return await _serviceFacade._characterService.GetByIdAsync(id);
+                return _mapper.Map<CharacterDTO>(await _serviceFacade._characterService.GetByIdAsync(id));
             }
             catch (CharacterNotFoundException ex)
             {
@@ -57,19 +64,19 @@ namespace FilmApi.Controllers
         /// Updates the details of a specific Character based on the provided character object and unique ID.
         /// </summary>
         /// <param name="id">The unique ID of the character to be updated.</param>
-        /// <param name="character">The character object containing the updated details.</param>
+        /// <param name="characterDTO">The character object containing the updated details.</param>
         /// <returns>Returns NoContent if the operation is successful; otherwise, BadRequest or NotFound based on the error.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCharacter(int id, Character character)
+        public async Task<IActionResult> PutCharacter(int id, CharacterPutDTO characterDTO)
         {
-            if (id != character.Id)
+            if (id != characterDTO.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _serviceFacade._characterService.UpdateAsync(character);
+                await _serviceFacade._characterService.UpdateAsync(_mapper.Map<Character>(characterDTO));
             }
             catch (CharacterNotFoundException ex)
             {
@@ -82,14 +89,14 @@ namespace FilmApi.Controllers
         /// <summary>
         /// Adds a new Character to the database.
         /// </summary>
-        /// <param name="character">The character object to be added.</param>
+        /// <param name="characterDTO">The character object to be added.</param>
         /// <returns>Returns a CreatedAtAction result, directing to the GetCharacter action to retrieve the newly added character; otherwise, an error response.</returns>
         [HttpPost]
-        public async Task<ActionResult<Character>> PostCharacter(Character character)
+        public async Task<ActionResult<CharacterDTO>> PostCharacter(CharacterPostDTO characterDTO)
         {
-            await _serviceFacade._characterService.AddAsync(character);
+            var newCharacter = await _serviceFacade._characterService.AddAsync(_mapper.Map<Character>(characterDTO));
 
-            return CreatedAtAction("GetCharacter", new { id = character.Id }, character);
+            return CreatedAtAction("GetCharacter", new { id = newCharacter.Id }, _mapper.Map<CharacterDTO>(newCharacter));
         }
 
         /// <summary>
