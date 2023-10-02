@@ -67,7 +67,6 @@ namespace FilmApi.Controllers
         /// <param name="id">The ID of the franchise to update.</param>
         /// <param name="franchiseDTO">The updated details of the franchise.</param>
         /// <returns>An IActionResult indicating the result of the operation.</returns>
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, FranchisePutDTO franchiseDTO)
         {
@@ -93,7 +92,6 @@ namespace FilmApi.Controllers
         /// </summary>
         /// <param name="franchiseDTO">The details of the new franchise to add.</param>
         /// <returns>The newly created franchise.</returns>
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<FranchiseDTO>> PostFranchise(FranchisePostDTO franchiseDTO)
         {

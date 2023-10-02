@@ -12,5 +12,6 @@ namespace FilmApi.Data.DTOs.MovieDTOs
         public string Director { get; set; } = null!;
         public string? PictureUrl { get; set; }
         public string? TrailerUrl { get; set; }
+        public int? FranchiseId { get; set; }
     }
 }
