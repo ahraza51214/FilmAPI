@@ -7,9 +7,11 @@ namespace FilmApi.Services.MovieService
     public interface IMovieService : ICrudService<Movie, int>
     {
         // Asynchronously get all characters associated with a movie by its ID.
-        Task<IEnumerable<Character>> GetCharactersInMovieAsync(int movieId);
+        Task<Movie> GetCharactersInMovieAsync(int movieId);
 
         // Asynchronously update characters associated with a movie by its ID with the given character IDs.
         Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds);
+
+        
     }
 }

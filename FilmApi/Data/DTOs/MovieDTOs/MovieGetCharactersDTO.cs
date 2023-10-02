@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FilmApi.Data.DTOs.CharacterDTOs;
+using System;
 namespace FilmApi.Data.DTOs.MovieDTOs
 {
-	public class MovieGetCharactersDTO
+    // Data Transfer Object to encapsulate the characters associated with a movie for client interaction.
+    public class MovieGetCharactersDTO
 	{
-		public MovieGetCharactersDTO()
-		{
-		}
-	}
+        // Collection of characters associated with the movie.
+        public ICollection<CharacterDTO> Characters { get; set; }
+    }
 }
 

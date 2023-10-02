@@ -9,9 +9,8 @@ namespace FilmApi.Mappers
 	{
 		public CharacterProfile()
 		{
-			CreateMap<Character, CharacterDTO>().ForMember(cdto => cdto.Movies, options => options
-			.MapFrom(c => c.Movies.Select(m => m.Id)));
-			CreateMap<Character, CharacterPostDTO>().ReverseMap();
+			CreateMap<Character, CharacterDTO>().ReverseMap();
+            CreateMap<Character, CharacterPostDTO>().ReverseMap();
 			CreateMap<Character, CharacterPutDTO>().ReverseMap();
 		}
 	}

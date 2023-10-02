@@ -8,6 +8,6 @@ namespace FilmApi.Data.DTOs.CharacterDTOs
         public string? Alias { get; set; }
         public string Gender { get; set; } = null!;
         public string? PictureUrl { get; set; }
-        public int[] Movies { get; set; }
+        //public int[] Movies { get; set; }
     }
 }

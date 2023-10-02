@@ -81,7 +81,7 @@ internal class Program
 
         // Add EF
         builder.Services.AddDbContext<MovieDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("Ali")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Pau")));
 
         // Add automapper
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
