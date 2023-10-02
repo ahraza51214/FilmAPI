@@ -4,6 +4,8 @@ using FilmApi.Data.Entities;
 using FilmApi.Services;
 using FilmApi.Exceptions;
 using System.Net.Mime;
+using FilmApi.Data.DTOs.CharacterDTOs;
+using AutoMapper;
 
 namespace FilmApi.Controllers
 {
@@ -17,11 +19,16 @@ namespace FilmApi.Controllers
         // Private field to store an instance of the ServiceFacade, providing access to movie-related services.
         private readonly ServiceFacade _serviceFacade;
 
+        // Private field to store an instance of the auto mapper.
+        private readonly IMapper _mapper;
+
         // Constructor for the MovieController, which takes a ServiceFacade as a dependency.
-        public MovieController(ServiceFacade serviceFacade)
+        public MovieController(ServiceFacade serviceFacade, IMapper mapper)
         {
             // Initialize the _serviceFacade field with the provided instance of ServiceFacade.
             _serviceFacade = serviceFacade;
+            // Initialize the _mapper field with the provided instance of Imapper.
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -142,11 +149,12 @@ namespace FilmApi.Controllers
         /// <param name="movieId">The ID of the movie for which to retrieve associated characters.</param>
         /// <returns>Returns a list of characters associated with the specified movie or a Not Found response if the movie was not found.</returns>
         [HttpGet("{movieId}/characters")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersInMovie(int movieId)
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharactersInMovie(int movieId)
         {
             try
             {
-                var characters = await _serviceFacade._movieService.GetCharactersInMovieAsync(movieId);
+                var characters = _mapper
+                    .Map<IEnumerable<CharacterDTO>>(await _serviceFacade._movieService.GetCharactersInMovieAsync(movieId));
                 return Ok(characters); // Returns a 200 OK response with the list of characters.
             }
             catch (MovieNotFoundException ex)

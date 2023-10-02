@@ -18,16 +18,18 @@ namespace FilmApi.Services.FranchiseService
             _context = context;
         }
 
+
         // Get all franchises asynchronously.
         public async Task<IEnumerable<Franchise>> GetAllAsync()
         {
-            return await _context.Franchises.ToListAsync();
+            return await _context.Franchises.Include(f => f.Movies).ToListAsync();
         }
+
 
         // Get a franchise by its ID asynchronously.
         public async Task<Franchise?> GetByIdAsync(int id)
         {
-            var franchise = await _context.Franchises.FindAsync(id);
+            var franchise = await _context.Franchises.Where(f => f.Id == id).Include(f => f.Movies).FirstAsync();
             if (franchise is null)
             {
                 // Throw an exception if the franchise with the specified ID is not found.
@@ -35,6 +37,7 @@ namespace FilmApi.Services.FranchiseService
             }
             return franchise;
         }
+
 
         // Update a franchise asynchronously.
         public async Task<Franchise> UpdateAsync(Franchise obj)
@@ -53,6 +56,7 @@ namespace FilmApi.Services.FranchiseService
             return obj;
         }
 
+
         // Add a new franchise asynchronously.
         public async Task<Franchise> AddAsync(Franchise obj)
         {
@@ -61,6 +65,7 @@ namespace FilmApi.Services.FranchiseService
             await _context.SaveChangesAsync();
             return obj;
         }
+
 
         // Delete a franchise by ID asynchronously.
         public async Task DeleteAsync(int id)
@@ -77,6 +82,7 @@ namespace FilmApi.Services.FranchiseService
             _context.Franchises.Remove(franchise);
             await _context.SaveChangesAsync();
         }
+
 
         // Update movies associated with a franchise asynchronously.
         public async Task UpdateMoviesInFranchiseAsync(int franchiseId, IEnumerable<int> movieIds)
@@ -109,6 +115,7 @@ namespace FilmApi.Services.FranchiseService
             await _context.SaveChangesAsync();
         }
 
+
         // Get all movies associated with a franchise asynchronously.
         public async Task<IEnumerable<Movie>> GetMoviesInFranchiseAsync(int franchiseId)
         {
@@ -126,6 +133,7 @@ namespace FilmApi.Services.FranchiseService
             // Return the list of movies associated with the franchise.
             return franchise?.Movies.ToList();
         }
+
 
         // Get all characters associated with all movies in a franchise asynchronously.
         public async Task<IEnumerable<Character>> GetCharactersInFranchiseAsync(int franchiseId)
@@ -145,6 +153,7 @@ namespace FilmApi.Services.FranchiseService
             // Return the list of characters associated with all movies in the franchise.
             return franchise.Movies.SelectMany(m => m.Characters).ToList();
         }
+
 
         // Check if a franchise with a given ID exists in the database.
         private async Task<bool> FranchiseExists(int id)

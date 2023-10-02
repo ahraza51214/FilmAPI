@@ -1,7 +1,8 @@
 ﻿using System;
 namespace FilmApi.Data.DTOs.CharacterDTOs
 {
-	public class CharacterPutDTO
+    // Definition of the CharacterPutDTO class, to update a character.
+    public class CharacterPutDTO
 	{
         public int Id { get; set; }
         public string FullName { get; set; } = null!;

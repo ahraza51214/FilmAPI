@@ -18,11 +18,13 @@ namespace FilmApi.Services.CharacterService
             _context = context;
         }
 
+
         // Get all characters asynchronously.
         public async Task<IEnumerable<Character>> GetAllAsync()
         {
             return await _context.Characters.Include(c => c.Movies).ToListAsync();
         }
+
 
         // Get a character by its ID asynchronously.
         public async Task<Character?> GetByIdAsync(int id)
@@ -35,6 +37,7 @@ namespace FilmApi.Services.CharacterService
             }
             return character;
         }
+
 
         // Update a character asynchronously.
         public async Task<Character> UpdateAsync(Character obj)
@@ -53,6 +56,7 @@ namespace FilmApi.Services.CharacterService
             return obj;
         }
 
+
         // Add a new character asynchronously.
         public async Task<Character> AddAsync(Character obj)
         {
@@ -61,6 +65,7 @@ namespace FilmApi.Services.CharacterService
             await _context.SaveChangesAsync();
             return obj;
         }
+
 
         // Delete a character by ID asynchronously.
         public async Task DeleteAsync(int id)
@@ -77,6 +82,7 @@ namespace FilmApi.Services.CharacterService
             _context.Characters.Remove(character);
             await _context.SaveChangesAsync();
         }
+
 
         // Check if a character with a given ID exists in the database.
         private async Task<bool> CharacterExists(int id)

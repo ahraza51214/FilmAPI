@@ -18,11 +18,13 @@ namespace FilmApi.Services.MovieService
             _context = context;
         }
 
+
         // Get all movies asynchronously.
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
             return await _context.Movies.ToListAsync();
         }
+
 
         // Get a movie by its ID asynchronously.
         public async Task<Movie?> GetByIdAsync(int id)
@@ -35,6 +37,7 @@ namespace FilmApi.Services.MovieService
             }
             return movie;
         }
+
 
         // Update a movie asynchronously.
         public async Task<Movie> UpdateAsync(Movie obj)
@@ -53,6 +56,7 @@ namespace FilmApi.Services.MovieService
             return obj;
         }
 
+
         // Add a new movie asynchronously.
         public async Task<Movie> AddAsync(Movie obj)
         {
@@ -61,6 +65,7 @@ namespace FilmApi.Services.MovieService
             await _context.SaveChangesAsync();
             return obj;
         }
+
 
         // Delete a movie by ID asynchronously.
         public async Task DeleteAsync(int id)
@@ -77,6 +82,7 @@ namespace FilmApi.Services.MovieService
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
         }
+
 
         // Update characters associated with a movie asynchronously.
         public async Task UpdateCharactersInMovieAsync(int movieId, IEnumerable<int> characterIds)
@@ -109,6 +115,7 @@ namespace FilmApi.Services.MovieService
             await _context.SaveChangesAsync();
         }
 
+
         // Get all characters associated with a movie asynchronously.
         public async Task<IEnumerable<Character>> GetCharactersInMovieAsync(int movieId)
         {
@@ -126,6 +133,7 @@ namespace FilmApi.Services.MovieService
             // Return the list of characters associated with the movie.
             return movie?.Characters.ToList();
         }
+
 
         // Check if a movie with a given ID exists in the database.
         private async Task<bool> MovieExists(int id)

@@ -1,11 +1,11 @@
 ﻿using System;
+
 namespace FilmApi.Data.DTOs.FranchiseDTOs
 {
-	public class FranchisePostDTO
+    // Definition of the FranchisePostDTO class, to create a new franchise.
+    public class FranchisePostDTO
 	{
-		public FranchisePostDTO()
-		{
-		}
-	}
+        public string Name { get; set; } = null!;
+        public string? Description { get; set; }
+    }
 }
-
