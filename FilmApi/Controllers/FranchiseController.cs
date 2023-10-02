@@ -66,7 +66,10 @@ namespace FilmApi.Controllers
         /// </summary>
         /// <param name="id">The ID of the franchise to update.</param>
         /// <param name="franchiseDTO">The updated details of the franchise.</param>
-        /// <returns>An IActionResult indicating the result of the operation.</returns>
+        /// <returns>Returns NoContent if suceessful updating Franchise, or 
+        /// Badrequest if the Franchise ID does not match the Franchise ID given in the body or 
+        /// FranchiseNotFoundException if the Franchise does not exsists.
+        /// </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFranchise(int id, FranchisePutDTO franchiseDTO)
         {
@@ -104,7 +107,7 @@ namespace FilmApi.Controllers
         /// Deletes a specific franchise by ID.
         /// </summary>
         /// <param name="id">The ID of the franchise to delete.</param>
-        /// <returns>An IActionResult indicating the result of the operation.</returns>
+        /// <returns>Return NoContent if successful, or FranchiseNotFoundException if the Franchise ID does not exsists.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFranchise(int id)
         {
@@ -143,7 +146,9 @@ namespace FilmApi.Controllers
         /// Fetches all the movies associated with a specific franchise.
         /// </summary>
         /// <param name="franchiseId">The ID of the franchise.</param>
-        /// <returns>A list of movies associated with the given franchise.</returns>
+        /// <returns>A list of movies associated with the given franchise if successfully, or 
+        /// FranchiseNotFoundException if the Franchise does not exsists. 
+        /// </returns>
         [HttpGet("{franchiseId}/movies")]
         public async Task<ActionResult<IEnumerable<MovieDTO>>>GetMoviesInFranchise(int franchiseId)
         {

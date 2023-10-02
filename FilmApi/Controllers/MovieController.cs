@@ -47,7 +47,8 @@ namespace FilmApi.Controllers
         /// Retrieves a specific movie by its ID.
         /// </summary>
         /// <param name="id">The ID of the movie to retrieve.</param>
-        /// <returns>The movie with the specified ID.</returns>
+        /// <returns>The movie with the specified ID if successfully, or 
+        /// MovieNotFoundException if the Movie ID does not exist.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<MovieDTO>> GetMovie(int id)
         {
@@ -66,7 +67,11 @@ namespace FilmApi.Controllers
         /// </summary>
         /// <param name="id">The ID of the movie to update.</param>
         /// <param name="movieDTO">The updated movie details.</param>
-        /// <returns>An IActionResult indicating the result of the update operation.</returns>
+        /// <returns>
+        /// Returns NoContent if successfully, or 
+        /// a BadRequest if the Movie ID does not match the movie ID given in the body, or
+        /// NotFound if the Movie ID does not exist. 
+        /// </returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMovie(int id, MoviePutDTO movieDTO)
         {
@@ -94,7 +99,7 @@ namespace FilmApi.Controllers
         /// Adds a new movie to the database.
         /// </summary>
         /// <param name="movieDTO">The details of the new movie to add.</param>
-        /// <returns>The newly created movie.</returns>
+        /// <returns>The newly created movie if succesfully, otherwise a BadRequest if Franchise id does not exist.</returns>
         [HttpPost]
         public async Task<ActionResult<MovieDTO>> PostMovie(MoviePostDTO movieDTO)
         {
@@ -114,7 +119,7 @@ namespace FilmApi.Controllers
         /// Deletes a specific movie from the database by its ID.
         /// </summary>
         /// <param name="id">The ID of the movie to delete.</param>
-        /// <returns>An IActionResult indicating the result of the delete operation.</returns>
+        /// <returns>Returns NoContent if successfully, or NotFound if the Movie ID does not exist.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
