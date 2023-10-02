@@ -51,4 +51,4 @@ By follow the above guidlines, you will now be able to run our Web Film API on y
 
 
 ## ER Class Diagram:
-<img width="1100" alt="MovieDbERDiagram" src="(https://github.com/ahraza51214/FilmAPI/assets/38948071/5371c4f5-00da-4b2c-9017-2f7ceaad7feb)">
+<img width="1100" alt="MovieDbERDiagram" src="https://github.com/ahraza51214/FilmAPI/assets/38948071/5371c4f5-00da-4b2c-9017-2f7ceaad7feb">
