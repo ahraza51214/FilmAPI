@@ -1,7 +1,8 @@
 ﻿using System;
 namespace FilmApi.Data.DTOs.CharacterDTOs
 {
-	public class CharacterPostDTO
+    // Definition of the CharacterPostDTO class, to create a new character.
+    public class CharacterPostDTO
 	{
         public string FullName { get; set; } = null!;
         public string? Alias { get; set; }

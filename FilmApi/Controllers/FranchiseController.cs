@@ -4,6 +4,10 @@ using FilmApi.Data.Entities;
 using FilmApi.Services;
 using FilmApi.Exceptions;
 using System.Net.Mime;
+using AutoMapper;
+using FilmApi.Data.DTOs.FranchiseDTOs;
+using FilmApi.Data.DTOs.MovieDTOs;
+using FilmApi.Data.DTOs.CharacterDTOs;
 
 namespace FilmApi.Controllers
 {
@@ -17,11 +21,16 @@ namespace FilmApi.Controllers
         // Private field to store an instance of the ServiceFacade, providing access to franchise-related services.
         private readonly ServiceFacade _serviceFacade;
 
+        // Private field to store an instance of the auto mapper.
+        private readonly IMapper _mapper;
+
         // Constructor for the FranchiseController, which takes a ServiceFacade as a dependency.
-        public FranchiseController(ServiceFacade serviceFacade)
+        public FranchiseController(ServiceFacade serviceFacade, IMapper mapper)
         {
             // Initialize the _serviceFacade field with the provided instance of ServiceFacade.
             _serviceFacade = serviceFacade;
+            // Initialize the _mapper field with the provided instance of Imapper.
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -29,9 +38,9 @@ namespace FilmApi.Controllers
         /// </summary>
         /// <returns>A list of all franchises.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Franchise>>> GetFranchises()
+        public async Task<ActionResult<IEnumerable<FranchiseDTO>>> GetFranchises()
         {
-            return Ok(await _serviceFacade._franchiseService.GetAllAsync());
+            return Ok(_mapper.Map<List<FranchiseDTO>>(await _serviceFacade._franchiseService.GetAllAsync()));
         }
 
         /// <summary>
@@ -40,11 +49,11 @@ namespace FilmApi.Controllers
         /// <param name="id">The ID of the franchise to retrieve.</param>
         /// <returns>The franchise with the specified ID if found; otherwise, an error message.</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Franchise>> GetFranchise(int id)
+        public async Task<ActionResult<FranchiseDTO>> GetFranchise(int id)
         {
             try
             {
-                return await _serviceFacade._franchiseService.GetByIdAsync(id);
+                return _mapper.Map<FranchiseDTO>(await _serviceFacade._franchiseService.GetByIdAsync(id));
             }
             catch (FranchiseNotFoundException ex)
             {
@@ -56,20 +65,20 @@ namespace FilmApi.Controllers
         /// Updates a specific franchise's details.
         /// </summary>
         /// <param name="id">The ID of the franchise to update.</param>
-        /// <param name="franchise">The updated details of the franchise.</param>
+        /// <param name="franchiseDTO">The updated details of the franchise.</param>
         /// <returns>An IActionResult indicating the result of the operation.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFranchise(int id, Franchise franchise)
+        public async Task<IActionResult> PutFranchise(int id, FranchisePutDTO franchiseDTO)
         {
-            if (id != franchise.Id)
+            if (id != franchiseDTO.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _serviceFacade._franchiseService.UpdateAsync(franchise);
+                await _serviceFacade._franchiseService.UpdateAsync(_mapper.Map<Franchise>(franchiseDTO));
             }
             catch (FranchiseNotFoundException ex)
             {
@@ -82,15 +91,15 @@ namespace FilmApi.Controllers
         /// <summary>
         /// Adds a new franchise to the database.
         /// </summary>
-        /// <param name="franchise">The details of the new franchise to add.</param>
+        /// <param name="franchiseDTO">The details of the new franchise to add.</param>
         /// <returns>The newly created franchise.</returns>
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Franchise>> PostFranchise(Franchise franchise)
+        public async Task<ActionResult<FranchiseDTO>> PostFranchise(FranchisePostDTO franchiseDTO)
         {
-            await _serviceFacade._franchiseService.AddAsync(franchise);
+            var newFranchise = await _serviceFacade._franchiseService.AddAsync(_mapper.Map<Franchise>(franchiseDTO));
 
-            return CreatedAtAction("GetFranchise", new { id = franchise.Id }, franchise);
+            return CreatedAtAction("GetFranchise", new { id = newFranchise.Id }, _mapper.Map<FranchiseDTO>(newFranchise));
         }
 
         /// <summary>
@@ -130,7 +139,6 @@ namespace FilmApi.Controllers
             {
                 return NotFound(ex.Message); // Returns a 404 Not Found response with a detailed error message.
             }
-            
         }
 
         /// <summary>
@@ -139,16 +147,18 @@ namespace FilmApi.Controllers
         /// <param name="franchiseId">The ID of the franchise.</param>
         /// <returns>A list of movies associated with the given franchise.</returns>
         [HttpGet("{franchiseId}/movies")]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMoviesInFranchise(int franchiseId)
+        public async Task<ActionResult<IEnumerable<MovieDTO>>>GetMoviesInFranchise(int franchiseId)
         {
-            var movies = await _serviceFacade._franchiseService.GetMoviesInFranchiseAsync(franchiseId);
-
-            if (movies == null || !movies.Any())
+            try
             {
-                return NotFound($"No movies found for franchise with ID {franchiseId}.");
+                return Ok(_mapper
+                    .Map<IEnumerable<MovieDTO>>(await _serviceFacade._franchiseService
+                    .GetMoviesInFranchiseAsync(franchiseId)));
             }
-
-            return Ok(movies);
+            catch (FranchiseNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         /// <summary>
@@ -157,16 +167,17 @@ namespace FilmApi.Controllers
         /// <param name="franchiseId">The ID of the franchise for which to retrieve associated characters.</param>
         /// <returns>Returns a list of characters associated with the specified franchise or a Not Found response if the franchise was not found.</returns>
         [HttpGet("{franchiseId}/characters")]
-        public async Task<ActionResult<IEnumerable<Character>>> GetCharactersInFranchise(int franchiseId)
+        public async Task<ActionResult<IEnumerable<CharacterDTO>>> GetCharactersInFranchise(int franchiseId)
         {
             try
             {
-                var characters = await _serviceFacade._franchiseService.GetCharactersInFranchiseAsync(franchiseId);
-                return Ok(characters);
+                return Ok(_mapper
+                    .Map<IEnumerable<CharacterDTO>>(await _serviceFacade._franchiseService
+                    .GetCharactersInFranchiseAsync(franchiseId)));
             }
             catch (FranchiseNotFoundException ex)
             {
-                return NotFound(ex.Message); // Returns a 404 Not Found response with a detailed error message.
+                return NotFound(ex.Message);
             }
         }
     }
