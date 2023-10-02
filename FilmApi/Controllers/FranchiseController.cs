@@ -72,7 +72,7 @@ namespace FilmApi.Controllers
         {
             if (id != franchiseDTO.Id)
             {
-                return BadRequest();
+                return BadRequest($"the id {id} given for franchise to be updated does not match the franchise id {franchiseDTO.Id} given in the body");
             }
 
             try

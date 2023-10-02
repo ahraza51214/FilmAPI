@@ -7,6 +7,7 @@ using System.Net.Mime;
 using FilmApi.Data.DTOs.CharacterDTOs;
 using AutoMapper;
 using FilmApi.Data.DTOs.MovieDTOs;
+using FilmApi.Data.DTOs.FranchiseDTOs;
 
 namespace FilmApi.Controllers
 {
@@ -71,7 +72,7 @@ namespace FilmApi.Controllers
         {
             if (id != movieDTO.Id)
             {
-                return BadRequest();
+                return BadRequest($"the id {id} given for movie to be updated does not match the movie id {movieDTO.Id} given in the body");
             }
 
             try
@@ -82,7 +83,10 @@ namespace FilmApi.Controllers
             {
                 return NotFound(ex.Message);
             }
-
+            catch
+            {
+                return BadRequest($"Franchise with id {movieDTO.FranchiseId} does not exist, please provide a valid franchise id");
+            }
             return NoContent();
         }
 
@@ -94,9 +98,16 @@ namespace FilmApi.Controllers
         [HttpPost]
         public async Task<ActionResult<MovieDTO>> PostMovie(MoviePostDTO movieDTO)
         {
-            var newMovie = await _serviceFacade._movieService.AddAsync(_mapper.Map<Movie>(movieDTO));
+            try
+            {
+                var newMovie = await _serviceFacade._movieService.AddAsync(_mapper.Map<Movie>(movieDTO));
 
-            return CreatedAtAction("GetMovie", new { id = newMovie.Id }, _mapper.Map<MovieDTO>(newMovie));
+                return CreatedAtAction("GetMovie", new { id = newMovie.Id }, _mapper.Map<MovieDTO>(newMovie));
+            }
+            catch
+            {
+                return BadRequest($"Franchise with id {movieDTO.FranchiseId} does not exist, please provide a valid franchise id");
+            }
         }
 
         /// <summary>

@@ -71,7 +71,7 @@ namespace FilmApi.Controllers
         {
             if (id != characterDTO.Id)
             {
-                return BadRequest();
+                return BadRequest($"the id {id} given for character to be updated does not match the character id {characterDTO.Id} given in the body");
             }
 
             try
