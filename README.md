@@ -38,7 +38,7 @@ builder.Services.AddDbContext<MovieDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Guest")));
 ```
 
-Lastly, in Visual Studio choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
+Lastly, remember to delete the 'Migrations' folder, then in Visual Studio choose: **Tool**->**Nuget Package Manager**->**Package Manager Console** and type:
 ```
 add-migration IntitialDB
 ```
