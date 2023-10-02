@@ -9,7 +9,13 @@ namespace FilmApi.Data.DTOs.CharacterDTOs
         public string? Alias { get; set; }
         public string Gender { get; set; } = null!;
         public string? PictureUrl { get; set; }
-        public int[] Movies { get; set; }
-        public string[] MovieTitles { get; set; }
+        public CharacterMovieDTO[] Movies { get; set; }
+    }
+
+    // Defining of the CharacterMovieDTO which is used to get the movie id and title when getting a character.
+    public class CharacterMovieDTO
+    {
+        public int MovieId { get; set; }
+        public string MovieTitle { get; set; }
     }
 }

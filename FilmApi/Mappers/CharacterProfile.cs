@@ -13,9 +13,14 @@ namespace FilmApi.Mappers
             // CreateMap method to define mapping from Character to CharacterDTO
             CreateMap<Character, CharacterDTO>()
                 .ForMember(cdto => cdto.Movies, options => options
-                    .MapFrom(c => c.Movies.Select(m => m.Id))) // Mapping Movies property to an array of movie IDs
-                .ForMember(cdto => cdto.MovieTitles, options => options
-                    .MapFrom(c => c.Movies.Select(m => m.Title))); // Mapping MovieTitles property to an array of movie titles
+                    // Map the 'Movies' property from 'Character' to 'CharacterDTO'
+                    .MapFrom(c => c.Movies.Select(m => new CharacterMovieDTO
+                    {
+                        // Map the 'Id' property from 'Movie' to 'MovieId' in 'CharacterMovieDTO'
+                        MovieId = m.Id,
+                        // Map the 'Title' property from 'Movie' to 'MovieTitles' in 'CharacterMovieDTO'
+                        MovieTitle = m.Title
+                    })));
 
             // CreateMap method to define bidirectional mapping between Character and CharacterPostDTO
             CreateMap<Character, CharacterPostDTO>().ReverseMap();

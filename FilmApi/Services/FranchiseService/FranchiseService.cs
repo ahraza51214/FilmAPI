@@ -128,6 +128,7 @@ namespace FilmApi.Services.FranchiseService
 
             // Retrieve the franchise with its associated movies from the database.
             var franchise = await _context.Franchises.Include(f => f.Movies)
+                                                .ThenInclude(m => m.Characters)
                                                 .FirstOrDefaultAsync(f => f.Id == franchiseId);
 
             // Return the list of movies associated with the franchise.

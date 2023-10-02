@@ -13,5 +13,13 @@ namespace FilmApi.Data.DTOs.MovieDTOs
         public string? PictureUrl { get; set; }
         public string? TrailerUrl { get; set; }
         public int? FranchiseId { get; set; }
+        public MovieCharacterDTO[] Characters { get; set; }
+    }
+
+    // Defining of the MovieCharacterDTO which is used to get the character id and fullName when getting a Movie.
+    public class MovieCharacterDTO
+    {
+        public int CharacterId { get; set; }
+        public string CharacterFullName { get; set; } = null!;
     }
 }
