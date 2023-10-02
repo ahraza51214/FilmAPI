@@ -22,14 +22,14 @@ namespace FilmApi.Services.MovieService
         // Get all movies asynchronously.
         public async Task<IEnumerable<Movie>> GetAllAsync()
         {
-            return await _context.Movies.ToListAsync();
+            return await _context.Movies.Include(m => m.Characters).ToListAsync();
         }
 
 
         // Get a movie by its ID asynchronously.
         public async Task<Movie?> GetByIdAsync(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
+            var movie = await _context.Movies.Where(m => m.Id == id).Include(m => m.Characters).FirstAsync();
             if (movie is null)
             {
                 // Throw an exception if the movie with the specified ID is not found.

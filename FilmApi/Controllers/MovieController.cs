@@ -6,6 +6,7 @@ using FilmApi.Exceptions;
 using System.Net.Mime;
 using FilmApi.Data.DTOs.CharacterDTOs;
 using AutoMapper;
+using FilmApi.Data.DTOs.MovieDTOs;
 
 namespace FilmApi.Controllers
 {
@@ -36,9 +37,9 @@ namespace FilmApi.Controllers
         /// </summary>
         /// <returns>A list containing all movies in the database.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Movie>>> GetMovies()
+        public async Task<ActionResult<IEnumerable<MovieDTO>>> GetMovies()
         {
-            return Ok(await _serviceFacade._movieService.GetAllAsync());
+            return Ok(_mapper.Map<List<MovieDTO>>(await _serviceFacade._movieService.GetAllAsync()));
         }
 
         /// <summary>
@@ -47,11 +48,11 @@ namespace FilmApi.Controllers
         /// <param name="id">The ID of the movie to retrieve.</param>
         /// <returns>The movie with the specified ID.</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Movie>> GetMovie(int id)
+        public async Task<ActionResult<MovieDTO>> GetMovie(int id)
         {
             try
             {
-                return await _serviceFacade._movieService.GetByIdAsync(id);
+                return _mapper.Map<MovieDTO>(await _serviceFacade._movieService.GetByIdAsync(id));
             }
             catch (MovieNotFoundException ex)
             {
@@ -63,20 +64,19 @@ namespace FilmApi.Controllers
         /// Updates the details of a specific movie.
         /// </summary>
         /// <param name="id">The ID of the movie to update.</param>
-        /// <param name="movie">The updated movie details.</param>
+        /// <param name="movieDTO">The updated movie details.</param>
         /// <returns>An IActionResult indicating the result of the update operation.</returns>
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMovie(int id, Movie movie)
+        public async Task<IActionResult> PutMovie(int id, MoviePutDTO movieDTO)
         {
-            if (id != movie.Id)
+            if (id != movieDTO.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                await _serviceFacade._movieService.UpdateAsync(movie);
+                await _serviceFacade._movieService.UpdateAsync(_mapper.Map<Movie>(movieDTO));
             }
             catch (MovieNotFoundException ex)
             {
@@ -89,15 +89,14 @@ namespace FilmApi.Controllers
         /// <summary>
         /// Adds a new movie to the database.
         /// </summary>
-        /// <param name="movie">The details of the new movie to add.</param>
+        /// <param name="movieDTO">The details of the new movie to add.</param>
         /// <returns>The newly created movie.</returns>
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Movie>> PostMovie(Movie movie)
+        public async Task<ActionResult<MovieDTO>> PostMovie(MoviePostDTO movieDTO)
         {
-            await _serviceFacade._movieService.AddAsync(movie);
+            var newMovie = await _serviceFacade._movieService.AddAsync(_mapper.Map<Movie>(movieDTO));
 
-            return CreatedAtAction("GetMovie", new { id = movie.Id }, movie);
+            return CreatedAtAction("GetMovie", new { id = newMovie.Id }, _mapper.Map<MovieDTO>(newMovie));
         }
 
         /// <summary>
