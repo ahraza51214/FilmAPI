@@ -52,3 +52,19 @@ By follow the above guidlines, you will now be able to run our Web Film API on y
 
 ## ER Class Diagram:
 <img width="1000" alt="MovieDbERDiagram" src="https://github.com/ahraza51214/FilmAPI/assets/38948071/5371c4f5-00da-4b2c-9017-2f7ceaad7feb">
+
+## Code Structure:
+In our project we have following folders:
+
+Entities folder: Classes in the entities folder represents the tables in the 'MovieDb' database.
+
+DTOs folder: DTOs (data transfer objects) folder. Contains objects we utilize to present only the essential information to the client regarding a request call.
+
+Mappers folder: In the 'Mappers' folder we define mapping profiles for characters, franchises, and movies.
+
+Services Folder: The 'Services' folder contains service classes for franchise, movies and characters, which take care of communication with the database depending on what request call the user makes to the API.
+
+Controllers folder: In the 'Controllers' folder we outline our controllers for franchises, movies, and characters. These controllers communicate with our services through the service facade.
+
+OBS! Our project also has ServiceFacade.cs file which is an facade to all the services we have in our project.
+
