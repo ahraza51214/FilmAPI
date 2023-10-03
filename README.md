@@ -47,7 +47,7 @@ and then:
 update-database
 ```
 <br>
-By follow the above guidlines, you will now be able to run our Web Film API on your local machine.
+By following the above guidlines, you will now be able to run our Web Film API on your local machine.
 
 
 ## ER Class Diagram:
